@@ -1,0 +1,10 @@
+<div class="question">
+  <p>{{(question$ | async)?.question}}</p>
+  <div class="question-answers">
+    <app-quiz-answer
+      class="answer"
+      [answerText] = answer
+      *ngFor="let answer of answers$ | async"
+    ></app-quiz-answer>
+  </div>
+</div>
