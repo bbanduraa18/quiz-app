@@ -6,10 +6,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AnswerComponent implements OnInit {
   @Input('answerText') answerTextProps!: string;
+  @Input('index') indexProps!: number;
+
+  letterMapping: string[] = ['A', 'B', 'C', 'D'];
 
   ngOnInit() {
-    // if(!this.answerTextProps) {
-    //   throw new Error('Inputs in answer are not correct');
-    // }
   }
 }
