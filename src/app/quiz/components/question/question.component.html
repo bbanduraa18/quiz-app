@@ -3,8 +3,9 @@
   <div class="question-answers">
     <app-quiz-answer
       class="answer"
+      *ngFor="let answer of answers$ | async; let i = index"
       [answerText] = answer
-      *ngFor="let answer of answers$ | async"
+      [index] = 'i'
     ></app-quiz-answer>
   </div>
 </div>
