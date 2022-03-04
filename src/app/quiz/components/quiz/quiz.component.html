@@ -16,6 +16,7 @@
         <h2>You have completed quiz!</h2>
         <p>You've got {{correctAnswerCount$ | async}} of {{questionsLength$ | async}} right.</p>
       </div>
+      <button mat-raised-button color="primary" (click)="restart()">Restart</button>
     </div>
   </ng-template>
 </div>

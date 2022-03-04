@@ -7,13 +7,15 @@ import { AnswerType } from "../types/answer.type";
 
 Injectable()
 export class QuizService {
-  state$ = new BehaviorSubject<IQuizState>({
+  initialState: IQuizState = {
     questions: mockData,
     showResults: false,
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
     answers: this.shuffleAnswers(mockData[0])
-  });
+  }
+
+  state$ = new BehaviorSubject<IQuizState>({...this.initialState});
 
   getState(): IQuizState {
     return this.state$.getValue();
@@ -26,11 +28,13 @@ export class QuizService {
   nextQuestion(): void {
     const state = this.getState();
     const newShowResults = state.currentQuestionIndex === state.questions.length - 1;
-    const currentQuestionIndex = newShowResults ? state.currentQuestionIndex : this.getState().currentQuestionIndex + 1;
+    const newCurrentQuestionIndex = newShowResults ? state.currentQuestionIndex : this.getState().currentQuestionIndex + 1;
+    const newAnswers = newShowResults ? [] : this.shuffleAnswers(state.questions[newCurrentQuestionIndex])
 
     this.setState({
-      currentQuestionIndex: currentQuestionIndex,
-      showResults: newShowResults
+      currentQuestionIndex: newCurrentQuestionIndex,
+      showResults: newShowResults,
+      answers: newAnswers,
     });
   }
 
@@ -46,5 +50,9 @@ export class QuizService {
     }))
     .sort((a, b) => a.sort - b.sort)
     .map(el => el.value)
+  }
+
+  restart(): void {
+    this.setState(this.initialState);
   }
 }

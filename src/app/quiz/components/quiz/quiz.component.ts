@@ -33,4 +33,8 @@ export class QuizComponent {
   nextQuestion(): void {
     this.quizService.nextQuestion();
   }
+
+  restart(): void {
+    this.quizService.restart();
+  }
 }
