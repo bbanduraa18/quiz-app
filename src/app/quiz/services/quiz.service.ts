@@ -60,6 +60,7 @@ export class QuizService {
 
   restart(): void {
     this.setState(this.initialState);
+    this.getQuestions();
   }
 
   selectAnswer(answer: AnswerType): void {
@@ -71,10 +72,12 @@ export class QuizService {
     this.setState({ currentAnswer: answer, correctAnswerCount: newCorrectAnswerCount });
   }
 
-  getQuestions(): Observable<IBackendQuestion[]> {
-    return this.http.get<{ results: IBackendQuestion[] }>(this.apiUrl).pipe(
-      map(res => res.results)
-    )
+  getQuestions(): void {
+    this.http.get<{ results: IBackendQuestion[] }>(this.apiUrl).pipe(
+      map((res) => res.results)
+    ).subscribe((questions) => {
+      this.loadQuestions(questions)
+    })
   }
 
   loadQuestions(backendQuestions: IBackendQuestion[]): void {

@@ -31,9 +31,7 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.quizService.getQuestions().subscribe(questions => {
-      this.quizService.loadQuestions(questions)
-    })
+    this.quizService.getQuestions()
   }
 
   nextQuestion(): void {
