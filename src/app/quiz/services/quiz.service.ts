@@ -8,7 +8,7 @@ import { IBackendQuestion } from "../types/backendQuestion.interface";
 
 @Injectable()
 export class QuizService {
-  apiUrl = 'https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple';
+  apiUrl = 'https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple&encode=url3986';
   initialState: IQuizState = {
     questions: [],
     showResults: false,
