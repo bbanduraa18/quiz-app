@@ -1,22 +1,26 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, map, Observable } from "rxjs";
 import { IQuizState } from "../types/quizState.interface";
-import mockData from '../data';
-import {IQuestion} from "../types/question.interface";
+import { IQuestion } from "../types/question.interface";
 import { AnswerType } from "../types/answer.type";
+import { HttpClient } from "@angular/common/http";
 
-Injectable()
+@Injectable()
 export class QuizService {
+  apiUrl = 'https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple';
   initialState: IQuizState = {
-    questions: mockData,
+    questions: [],
     showResults: false,
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
-    answers: this.shuffleAnswers(mockData[0]),
+    answers: [],
     currentAnswer: null,
-  }
+  };
 
   state$ = new BehaviorSubject<IQuizState>({...this.initialState});
+
+  constructor(private http: HttpClient) {
+  }
 
   getState(): IQuizState {
     return this.state$.getValue();
@@ -65,5 +69,16 @@ export class QuizService {
       : state.correctAnswerCount;
 
     this.setState({ currentAnswer: answer, correctAnswerCount: newCorrectAnswerCount });
+  }
+
+  getQuestions(): Observable<IQuestion[]> {
+    return this.http.get<{ results: IQuestion[] }>(this.apiUrl).pipe(
+      map(res => res.results)
+    )
+  }
+
+  loadQuestions(questions: IQuestion[]): void {
+    const initialAnswers = this.shuffleAnswers(questions[0]);
+    this.setState({ questions, answers: initialAnswers });
   }
 }

@@ -5,7 +5,6 @@ import { QuestionComponent } from "./components/question/question.component";
 import { AnswerComponent } from "./components/answer/answer.component";
 import { QuizService } from "./services/quiz.service";
 import { CommonModule } from "@angular/common";
-import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonModule } from "@angular/material/button";
 
 const routes: Routes = [
@@ -13,7 +12,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, MatGridListModule, MatButtonModule],
+  imports: [RouterModule.forChild(routes), CommonModule, MatButtonModule],
   declarations: [QuizComponent, QuestionComponent, AnswerComponent],
   providers: [QuizService]
 })

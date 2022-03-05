@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { QuizService } from "../../services/quiz.service";
 import { map, Observable } from "rxjs";
 
@@ -6,7 +6,7 @@ import { map, Observable } from "rxjs";
   selector: 'app-quiz',
   templateUrl: './quiz.component.html'
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit {
   questionsLength$: Observable<number>;
   currentQuestionIndex$: Observable<number>;
   showResults$: Observable<boolean>;
@@ -28,6 +28,12 @@ export class QuizComponent {
     this.correctAnswerCount$ = this.quizService.state$.pipe(
       map(state => state.correctAnswerCount)
     );
+  }
+
+  ngOnInit() {
+    this.quizService.getQuestions().subscribe(questions => {
+      this.quizService.loadQuestions(questions)
+    })
   }
 
   nextQuestion(): void {
