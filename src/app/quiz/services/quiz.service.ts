@@ -47,8 +47,7 @@ export class QuizService {
 
   shuffleAnswers(question: IQuestion): AnswerType[] {
     const unshuffledAnswers = [
-      ...question.incorrectAnswers,
-      ...question.correctAnswer
+      ...question.incorrectAnswers, question.correctAnswer
     ];
 
     return unshuffledAnswers.map(unshuffledAnswer => ({
@@ -93,7 +92,7 @@ export class QuizService {
       return {
         question: decodeURIComponent(backendQuestion.question),
         correctAnswer: decodeURIComponent(backendQuestion.correct_answer),
-        incorrectAnswers
+        incorrectAnswers: incorrectAnswers
       };
     })
   }

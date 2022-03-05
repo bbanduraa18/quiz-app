@@ -14,19 +14,19 @@ export class QuizComponent implements OnInit {
 
   constructor(private quizService: QuizService) {
     this.questionsLength$ = this.quizService.state$.pipe(
-      map(state => state.questions.length)
+      map((state) => state.questions.length)
     );
 
     this.currentQuestionIndex$ = this.quizService.state$.pipe(
-      map(state => state.currentQuestionIndex + 1)
+      map((state) => state.currentQuestionIndex + 1)
     );
 
     this.showResults$ = this.quizService.state$.pipe(
-      map(state => state.showResults)
+      map((state) => state.showResults)
     );
 
     this.correctAnswerCount$ = this.quizService.state$.pipe(
-      map(state => state.correctAnswerCount)
+      map((state) => state.correctAnswerCount)
     );
   }
 

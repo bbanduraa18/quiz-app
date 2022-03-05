@@ -18,11 +18,11 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   constructor(private quizService: QuizService) {
     this.question$ = this.quizService.state$.pipe(
-      map(state => state.questions[state.currentQuestionIndex])
+      map((state) => (state.questions[state.currentQuestionIndex]))
     );
 
     this.answers$ = this.quizService.state$.pipe(
-      map(state => state.answers)
+      map((state) => state.answers)
     );
   }
 
