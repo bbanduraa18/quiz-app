@@ -7,4 +7,5 @@ export interface IQuizState {
   currentQuestionIndex: number;
   correctAnswerCount: number;
   answers: AnswerType[];
+  currentAnswer: AnswerType | null;
 }

@@ -12,7 +12,8 @@ export class QuizService {
     showResults: false,
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
-    answers: this.shuffleAnswers(mockData[0])
+    answers: this.shuffleAnswers(mockData[0]),
+    currentAnswer: null,
   }
 
   state$ = new BehaviorSubject<IQuizState>({...this.initialState});
@@ -54,5 +55,9 @@ export class QuizService {
 
   restart(): void {
     this.setState(this.initialState);
+  }
+
+  selectAnswer(answer: AnswerType): void {
+    this.setState({currentAnswer: answer});
   }
 }

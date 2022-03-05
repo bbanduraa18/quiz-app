@@ -10,7 +10,9 @@ import {AnswerType} from "../../types/answer.type";
 })
 export class QuestionComponent {
   question$: Observable<IQuestion>;
-  answers$: Observable<AnswerType[]>
+  answers$: Observable<AnswerType[]>;
+  correctAnswer$: Observable<AnswerType>;
+  currentAnswer$: Observable<AnswerType | null>;
 
   constructor(private quizService: QuizService) {
     this.question$ = this.quizService.state$.pipe(
@@ -19,7 +21,19 @@ export class QuestionComponent {
 
     this.answers$ = this.quizService.state$.pipe(
       map(state => state.answers)
-    )
+    );
+
+    this.correctAnswer$ = this.question$.pipe(
+      map(question => question.correctAnswer)
+    );
+
+    this.currentAnswer$ = this.quizService.state$.pipe(
+      map(state => state.currentAnswer)
+    );
+  }
+
+  selectAnswer(answer: AnswerType): void {
+    this.quizService.selectAnswer(answer);
   }
 
 }
