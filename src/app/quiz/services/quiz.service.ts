@@ -36,6 +36,7 @@ export class QuizService {
       currentQuestionIndex: newCurrentQuestionIndex,
       showResults: newShowResults,
       answers: newAnswers,
+      currentAnswer: null,
     });
   }
 

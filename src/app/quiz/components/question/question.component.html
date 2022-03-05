@@ -6,6 +6,12 @@
       *ngFor="let answer of answers$ | async; let i = index"
       [answerText] = answer
       [index] = 'i'
+      [ngClass]="{
+        'correct-answer': isCorrectAnswer(answer),
+        'wrong-answer': isWrongAnswer(answer),
+        'disabled-answer': isDisabledAnswer()
+      }"
+      (selectAnswer)="selectAnswer($event)"
     ></app-quiz-answer>
   </div>
 </div>
