@@ -1,5 +1,5 @@
 <div class="quiz">
-  <div *ngIf="!(showResults$ | async); else completed" class="quiz-question">
+  <div *ngIf="!(showResults$ | async) && (questionsLength$ | async); else completed" class="quiz-question">
     <h1 class="quiz-score">
       Question {{currentQuestionIndex$ | async}}/{{questionsLength$ | async}}
     </h1>

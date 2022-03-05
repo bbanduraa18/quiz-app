@@ -4,6 +4,7 @@ import { IQuizState } from "../types/quizState.interface";
 import { IQuestion } from "../types/question.interface";
 import { AnswerType } from "../types/answer.type";
 import { HttpClient } from "@angular/common/http";
+import { IBackendQuestion } from "../types/backendQuestion.interface";
 
 @Injectable()
 export class QuizService {
@@ -71,14 +72,29 @@ export class QuizService {
     this.setState({ currentAnswer: answer, correctAnswerCount: newCorrectAnswerCount });
   }
 
-  getQuestions(): Observable<IQuestion[]> {
-    return this.http.get<{ results: IQuestion[] }>(this.apiUrl).pipe(
+  getQuestions(): Observable<IBackendQuestion[]> {
+    return this.http.get<{ results: IBackendQuestion[] }>(this.apiUrl).pipe(
       map(res => res.results)
     )
   }
 
-  loadQuestions(questions: IQuestion[]): void {
-    const initialAnswers = this.shuffleAnswers(questions[0]);
-    this.setState({ questions, answers: initialAnswers });
+  loadQuestions(backendQuestions: IBackendQuestion[]): void {
+    const normalizedQuestions = this.normalizeQuestions(backendQuestions);
+    const initialAnswers = this.shuffleAnswers(normalizedQuestions[0]);
+    this.setState({ questions: normalizedQuestions, answers: initialAnswers });
+  }
+
+  normalizeQuestions(backendQuestions: IBackendQuestion[]): IQuestion[] {
+    return backendQuestions.map(backendQuestion => {
+      const incorrectAnswers = backendQuestion.incorrect_answers.map(backendIncorrectAnswer => {
+        return decodeURIComponent(backendIncorrectAnswer)
+      });
+
+      return {
+        question: decodeURIComponent(backendQuestion.question),
+        correctAnswer: decodeURIComponent(backendQuestion.correct_answer),
+        incorrectAnswers
+      };
+    })
   }
 }

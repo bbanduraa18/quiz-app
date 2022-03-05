@@ -28,15 +28,15 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.correctAnswerSubscription = this.question$.pipe(
-      map(question => question.correctAnswer)
+      map((question) => question.correctAnswer)
     ).subscribe(
-      correctAnswer => this.correctAnswer = correctAnswer
+      (correctAnswer) => (this.correctAnswer = correctAnswer)
     );
 
     this.currentAnswerSubscription = this.quizService.state$.pipe(
-      map(state => state.currentAnswer)
+      map((state) => state.currentAnswer)
     ).subscribe(
-      currentAnswer => this.currentAnswer = currentAnswer
+      (currentAnswer) => (this.currentAnswer = currentAnswer)
     );
   }
 
