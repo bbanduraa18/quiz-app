@@ -59,6 +59,11 @@ export class QuizService {
   }
 
   selectAnswer(answer: AnswerType): void {
-    this.setState({currentAnswer: answer});
+    const state = this.getState();
+    const newCorrectAnswerCount = answer === state.questions[state.currentQuestionIndex].correctAnswer
+      ? state.correctAnswerCount + 1
+      : state.correctAnswerCount;
+
+    this.setState({ currentAnswer: answer, correctAnswerCount: newCorrectAnswerCount });
   }
 }
